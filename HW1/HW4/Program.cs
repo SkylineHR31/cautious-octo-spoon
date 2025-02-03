@@ -1,53 +1,68 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Net;
+using System.Xml.Linq;
+
 bool shouldExit = false;
 string consoleInput;
-int dayNumber;
-while (!shouldExit)
-{
-    Console.WriteLine("Please enter number of day(from 1 to 7). \n Enter \"exit\" to exit. \n");
+int leftOperand = 0;
+int rightOperand = 0;
+string calcOperator = "";
 
-    consoleInput = Console.ReadLine();
+while (!shouldExit) {
+    Console.WriteLine("Please enter two numbers and one operator(+, -, *, / are allowed) one by one. \n Enter \"exit\" to exit. \n");
 
-    if (int.TryParse(consoleInput, out dayNumber))
-    {
-        switch (dayNumber)
+    for (int i = 0; i < 3; i++) {
+        consoleInput = Console.ReadLine();
+        if (consoleInput == "exit")
+        {
+            shouldExit = true;
+            return;
+        }
+
+        switch (i)
         {
             case 0:
-                shouldExit = true;
-                break;
-            case < 0:
-                Console.WriteLine("Please enter number of day(from 1 to 7). \n Negative numbers is not allowed. \n");
-                break;
+                if (!int.TryParse(consoleInput, out leftOperand)) {
+                    Console.WriteLine("Not a number, please re-run program");
+                    shouldExit = true;
+                    return;
+                }
+                    break;
             case 1:
-                Console.WriteLine("Its Monday \n");
-                break;
+                if (!int.TryParse(consoleInput, out rightOperand)) {
+                    Console.WriteLine("Not a number, please re-run program");
+                    shouldExit = true;
+                    return;
+                }
+                    break;
             case 2:
-                Console.WriteLine("Its Tuesday \n");
-                break;
-            case 3:
-                Console.WriteLine("Its Wednesday \n");
-                break;
-            case 4:
-                Console.WriteLine("Its Thursday \n");
-                break;
-            case 5:
-                Console.WriteLine("Its Friday \n");
-                break;
-            case 6:
-                Console.WriteLine("Its Saturday \n");
-                break;
-            case 7:
-                Console.WriteLine("Its Sunday \n");
-                break;
-            default:
-                Console.WriteLine("Invalid input! Please enter a number from 1 to 7. \n");
+                if (consoleInput != "+" && consoleInput != "-" && consoleInput != "*" && consoleInput != "/") {
+                    Console.WriteLine("Wrong operator, please re-run program");
+                    shouldExit = true;
+                    return;
+                }
+                calcOperator = consoleInput;
                 break;
         }
     }
-    else
-    {
-        Console.WriteLine("Please enter ONLY number of day(from 1 to 7). \n words, strings, etc. is not allowed. \n");
+
+    switch (calcOperator) {
+        case "+":
+            Console.WriteLine($"Result is: {leftOperand + rightOperand}. \n");
+            break;
+        case "-":
+            Console.WriteLine($"Result is: {leftOperand - rightOperand}. \n");
+            break;
+        case "*":
+            Console.WriteLine($"Result is: {leftOperand * rightOperand}. \n");
+            break;
+        case "/":
+            if (calcOperator == "/" && rightOperand == 0) {
+                Console.WriteLine("Please learn math better, schoolboy");
+                shouldExit = true;
+                return;
+            }
+            Console.WriteLine($"Result is: {leftOperand / rightOperand}. \n");
+            break;
     }
-
-
 }
