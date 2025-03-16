@@ -61,7 +61,7 @@ for (int i = 0; i < 5 ; i++)
 {
     for(int j = 0;j < 5 ; j++) { 
     
-    array2[i,j] = array[i] = rand.Next(-100, 100);
+    array2[i,j] = rand.Next(-100, 100);
     }
 }
 
